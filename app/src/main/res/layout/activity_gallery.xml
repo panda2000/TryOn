@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--Экран галереи реализует разметру для galleryActivity
+<!--Экран галереи реализует разметру для GalleryActivity
 отображает все доступные изображения и их названия на выбранном ресурсе
 в виде списка, для отображения используем
     для отображения используем   RecyclerView   galleryRecyclerView
@@ -8,7 +8,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.pandaprg.tryon.ui.activity.gallery.galleryActivity">
+    tools:context="ru.pandaprg.tryon.ui.activity.gallery.GalleryActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/galleryRecyclerView"

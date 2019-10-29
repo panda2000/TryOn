@@ -12,6 +12,7 @@
 
 package ru.pandaprg.tryon.ui.activity.gallery;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ import ru.pandaprg.tryon.R;
 import ru.pandaprg.tryon.presentation.presenter.gallery.GalleryItem;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
-
+    private static final String TAG = "GalleryAdapter";
     ArrayList<GalleryItem> list;
 
     public GalleryAdapter(ArrayList<GalleryItem> list) {
@@ -49,7 +50,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GalleryItem item = list.get(position);
         holder.textView.setText(item.getImageName());
-        Picasso.get().load(item.getImagePath()).into(holder.imageView);
+        Log.i(TAG, "onBindViewHolder: " + item.getImagePath());
+        Picasso.get().load("file://" + item.getImagePath()).into(holder.imageView);
     }
 
     @Override
@@ -58,7 +60,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
+        private static final String TAG = "ViewHolder";
         TextView textView;
         ImageView imageView;
 
@@ -71,7 +73,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
         @Override
         public void onClick(View v) {
-
+            Log.i(TAG, "onClick: "+textView.getText());
         }
     }
 }

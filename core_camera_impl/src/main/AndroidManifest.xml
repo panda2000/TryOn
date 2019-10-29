@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.pandaprg.core_camera_impl" >
+
+    <uses-permission android:name="android.permission.CAMERA" />
+</manifest>

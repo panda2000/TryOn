@@ -7,7 +7,7 @@ package ru.pandaprg.tryon.presentation.presenter.gallery;
 
 public class GalleryItem {
     private String imageName;
-    private int imagePath;
+    private String imagePath;
 
     public String getImageName() {
         return imageName;
@@ -17,15 +17,15 @@ public class GalleryItem {
         this.imageName = imageName;
     }
 
-    public int getImagePath() {
+    public String getImagePath() {
         return imagePath;
     }
 
-    public void setImagePath(int imagePath) {
+    public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
 
-    public GalleryItem(String imageName, int imagePath) {
+    public GalleryItem(String imageName, String imagePath) {
         this.imageName = imageName;
         this.imagePath = imagePath;
     }
