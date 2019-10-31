@@ -1,0 +1,2 @@
+include ':app', ':stub-android', ':library', ':core_camera_impl'
+rootProject.name='TryOn'
