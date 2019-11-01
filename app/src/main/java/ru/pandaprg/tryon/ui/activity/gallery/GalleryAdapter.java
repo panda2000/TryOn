@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,7 +52,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GalleryItem item = list.get(position);
-        holder.textView.setText(item.getImageName());
+        //holder.textView.setText(item.getImageName());
         Log.i(TAG, "onBindViewHolder: " + item.getImagePath());
         Picasso.get().load("file://" + item.getImagePath()).into(holder.imageView);
     }
@@ -65,12 +64,12 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private static final String TAG = "ViewHolder";
-        TextView textView;
+        //TextView textView;
         ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.galleryTextItem);
+            //textView = itemView.findViewById(R.id.galleryTextItem);
             imageView = itemView.findViewById(R.id.galleryImageItem);
             imageView.setOnClickListener(this::onClick);
         }

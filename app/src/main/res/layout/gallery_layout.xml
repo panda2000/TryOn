@@ -20,13 +20,13 @@
         android:layout_weight="7"
         android:src="@mipmap/ic_launcher_round"/>
 
-    <TextView
+    <!--TextView
         android:id="@+id/galleryTextItem"
         android:layout_width="0dp"
         android:layout_height="160dp"
         android:layout_weight="10"
         android:layout_marginStart="8dp"
-        android:text="Example"/>
+        android:text="Example"/-->
 
 
 </LinearLayout>
