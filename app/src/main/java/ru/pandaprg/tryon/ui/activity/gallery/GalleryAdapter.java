@@ -28,13 +28,16 @@ import java.util.ArrayList;
 
 import ru.pandaprg.tryon.R;
 import ru.pandaprg.tryon.presentation.presenter.gallery.GalleryItem;
+import ru.pandaprg.tryon.presentation.presenter.gallery.GalleryPresenter;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
     private static final String TAG = "GalleryAdapter";
     ArrayList<GalleryItem> list;
+    GalleryPresenter mGalleryPresenter;
 
-    public GalleryAdapter(ArrayList<GalleryItem> list) {
+    public GalleryAdapter(ArrayList<GalleryItem> list, GalleryPresenter presenter) {
         this.list = list;
+        this.mGalleryPresenter = presenter;
     }
 
     @NonNull
@@ -42,6 +45,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     // Создание элементов списка
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_layout, parent, false);
+
         return new ViewHolder(v);
     }
 
@@ -73,7 +77,9 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
         @Override
         public void onClick(View v) {
-            Log.i(TAG, "onClick: "+textView.getText());
+            String filePath = list.get(getAdapterPosition()).getImagePath();
+            Log.i(TAG, "onClick: "+ filePath);
+            mGalleryPresenter.onClick(filePath);
         }
     }
 }

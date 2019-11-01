@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import ru.terrakok.cicerone.Navigator;
+import ru.terrakok.cicerone.commands.BackTo;
 import ru.terrakok.cicerone.commands.Command;
 import ru.terrakok.cicerone.commands.Forward;
 
@@ -34,6 +35,13 @@ public class MainNavigator implements Navigator {
                     Log.i(TAG, "applyCommands: "+forward.getScreenKey());
                     ctx.startActivity( new Screens.StartGallery().getActivityIntent(ctx) );
                 }
+            } else if (command instanceof BackTo) {
+                BackTo backTo = (BackTo) command;
+                Log.i(TAG, "applyCommands: BackTo");
+                if (backTo.getScreenKey() == null) {
+                    ctx.startActivity( new Screens.StartVideo().getActivityIntent(ctx) );
+                }
+
             }
         }
     }

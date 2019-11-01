@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import moxy.InjectViewState;
 import moxy.MvpPresenter;
+import ru.pandaprg.tryon.App;
+import ru.pandaprg.tryon.model.Model;
 import ru.pandaprg.tryon.presentation.view.gallery.GalleryView;
 
 
@@ -49,6 +51,11 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
 
         Log.i(TAG, "getListFiles: len = " + list.size());
         return list;
+    }
+
+    public void onClick (String fileName) {
+        Model.getInstance().setPictureName(fileName);
+        App.INSTANCE.getRouter().backTo(null);
     }
 
 }

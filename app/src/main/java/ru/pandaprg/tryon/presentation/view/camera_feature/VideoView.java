@@ -12,6 +12,8 @@ public interface VideoView extends MvpView {
     @StateStrategyType(AddToEndStrategy.class)
     void setLocalPicture (int id);
     @StateStrategyType(AddToEndStrategy.class)
+    void setLocalPicture (String fileName);
+    @StateStrategyType(AddToEndStrategy.class)
     void getPictureParams ();
     @StateStrategyType(AddToEndStrategy.class)
     void setPictureParams (ViewGroup.LayoutParams params);

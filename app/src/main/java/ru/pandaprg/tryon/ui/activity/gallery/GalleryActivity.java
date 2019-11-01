@@ -74,6 +74,7 @@ public class GalleryActivity extends MvpActivity implements GalleryView {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.galleryRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
         requestForPermission();
         mGalleryPresenter.generateList ();
 
@@ -81,7 +82,7 @@ public class GalleryActivity extends MvpActivity implements GalleryView {
 
         File root = Environment.getExternalStorageDirectory().getAbsoluteFile();
 
-        recyclerView.setAdapter(new GalleryAdapter(mGalleryPresenter.getListFiles(root)));
+        recyclerView.setAdapter(new GalleryAdapter(mGalleryPresenter.getListFiles(root), mGalleryPresenter));
     }
 
     @Override
@@ -96,4 +97,6 @@ public class GalleryActivity extends MvpActivity implements GalleryView {
         App.INSTANCE.getNavigatorHolder().removeNavigator();
         super.onPause();
     }
+
+
 }

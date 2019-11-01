@@ -11,6 +11,7 @@ import moxy.InjectViewState;
 import moxy.MvpPresenter;
 import ru.pandaprg.tryon.App;
 import ru.pandaprg.tryon.R;
+import ru.pandaprg.tryon.model.Model;
 import ru.pandaprg.tryon.presentation.view.camera_feature.VideoView;
 import ru.terrakok.cicerone.Router;
 
@@ -24,11 +25,13 @@ public class VideoPresenter extends MvpPresenter<VideoView> {
     private float imageAlpha;
     private int imageSize;
     private ViewGroup.LayoutParams params;
+    private String fileName;
 
     public VideoPresenter () {
         imageAlpha = 90;
         getViewState().setAlpha(imageAlpha);
-        getViewState().setLocalPicture(R.drawable.v3);
+
+        onResume();
 
         router = App.INSTANCE.getRouter();
     }
@@ -52,6 +55,15 @@ public class VideoPresenter extends MvpPresenter<VideoView> {
     public void onPictureClick () {
         Log.i(TAG, "onPictureClick: " + "StartGallery router="+router.toString());
         router.navigateTo( "StartGallery");
+    }
+
+    public void onResume () {
+        fileName = Model.getInstance().getPictureName();
+        if (fileName == null) {
+            getViewState().setLocalPicture(R.mipmap.canvas_icon);
+        } else {
+            getViewState().setLocalPicture (fileName);
+        }
     }
 }
 

@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+
 import moxy.MvpActivity;
 import moxy.presenter.InjectPresenter;
 import ru.pandaprg.core_camera_impl.Camera.SurfaceListener;
@@ -90,7 +92,7 @@ public class VideoActivity extends MvpActivity implements VideoView, SeekBar.OnS
     protected void onResume () {
         super.onResume();
         App.INSTANCE.getNavigatorHolder().setNavigator(navigator);
-
+        //mVideoPresenter.onResume();
     }
 
     @Override
@@ -107,6 +109,13 @@ public class VideoActivity extends MvpActivity implements VideoView, SeekBar.OnS
     @Override
     public void setLocalPicture(int id) {
         Picasso.get().load(id).into(videoImageView);
+    }
+
+    @Override
+    public void setLocalPicture(String fileName) {
+        Log.i(TAG, "setLocalPicture: Picasso Load..." + fileName);
+        Picasso.get().load(new File (fileName)).into(videoImageView);
+        Log.i(TAG, "setLocalPicture: Picasso Loaded...");
     }
 
     @Override
