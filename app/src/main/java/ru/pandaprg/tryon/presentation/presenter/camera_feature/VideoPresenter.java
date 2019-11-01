@@ -1,5 +1,8 @@
-package ru.pandaprg.tryon.presentation.presenter.camera_feature;
+/*
+ *  Лоигика управления окном Video
+ */
 
+package ru.pandaprg.tryon.presentation.presenter.camera_feature;
 
 import android.util.Log;
 import android.view.ViewGroup;
@@ -25,7 +28,7 @@ public class VideoPresenter extends MvpPresenter<VideoView> {
     public VideoPresenter () {
         imageAlpha = 90;
         getViewState().setAlpha(imageAlpha);
-        getViewState().setLocalPicture(R.drawable.v1);
+        getViewState().setLocalPicture(R.drawable.v3);
 
         router = App.INSTANCE.getRouter();
     }
