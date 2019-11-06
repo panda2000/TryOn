@@ -22,9 +22,6 @@ public class MainActivity extends Activity {
     private Navigator navigator;
     private MainPresenter presenter;
 
-   // private Intent intentVideo;
-   // private Intent intentGallery;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +37,6 @@ public class MainActivity extends Activity {
 
         presenter.start();
 
-       // intentVideo = VideoActivity.getIntent(this);
-       // intentGallery = GalleryActivity.getIntent(this);
-
-       // startActivity(intentGallery);
-        //startActivity(intentVideo);
     }
 
     @Override

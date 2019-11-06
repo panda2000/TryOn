@@ -42,7 +42,7 @@ public class VideoActivity extends MvpActivity implements VideoView, SeekBar.OnS
     private Navigator navigator;
 
     TextureView videoView = null;
-    TextureView.SurfaceTextureListener surfaceTextureListener;
+    SurfaceListener surfaceTextureListener;
 
     private ImageView videoImageView;
     private SeekBar sizeSeekBar;
@@ -85,7 +85,7 @@ public class VideoActivity extends MvpActivity implements VideoView, SeekBar.OnS
         videoView =  findViewById(R.id.textureViewVideo);
         surfaceTextureListener = new SurfaceListener(this); // подключаем Камеру
         videoView.setSurfaceTextureListener(surfaceTextureListener);
-
+        surfaceTextureListener.setTextureView(videoView);
     }
 
     @Override

@@ -18,19 +18,27 @@ public class SurfaceListener implements TextureView.SurfaceTextureListener {
     private MyCamera2 myCamera2;
     private Context ctx;
 
+    TextureView view;
+
 
     public SurfaceListener(Context ctx) {
         this.ctx = ctx;
     }
 
+    public void setTextureView(TextureView view){
+        this.view = view;
+    }
+
+
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
 
+
         Log.i(TAG, "onSurfaceTextureAvailable:"+surface.toString()+" w="+width+"  h="+height);
-        myCamera2 = new MyCamera2(ctx, width, height); // (1)-(6)
+        myCamera2 = new MyCamera2(ctx, width, height, view, surface); // (1)-(6)    // Перегружен конструктор, Передаётся много лишних параметров
 
         //(7) Setup the image buffer size to TextureView
-        surface.setDefaultBufferSize(1920,1080);
+        surface.setDefaultBufferSize(width, height);
 
         //(8) Start Camera
         myCamera2.startCameraCaptureSession (surface);
