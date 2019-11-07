@@ -13,18 +13,5 @@ public class MainPresenter {
     public void start() {
         router.navigateTo( "StartVideo");
     }
-/*
-    public void onBackCommandClick() {
-        router.exit();
-    }
 
-    public void onForwardCommandClick() {
-        router.navigateTo( "StartScreen");
-    }
-
-    public void onSettingsCommandClick() {
-        router.navigateTo( "SettingsScreen");
-    }
-
- */
 }

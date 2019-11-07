@@ -7,7 +7,6 @@ package ru.pandaprg.tryon.ui.activity.camera_feature;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.TextureView;
@@ -17,7 +16,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -41,19 +39,12 @@ public class VideoActivity extends MvpActivity implements VideoView, SeekBar.OnS
 
     private Navigator navigator;
 
-    TextureView videoView = null;
-    SurfaceListener surfaceTextureListener;
+    private TextureView videoView = null;
+    private SurfaceListener surfaceTextureListener;
 
     private ImageView videoImageView;
     private SeekBar sizeSeekBar;
     private SeekBar alphaSeekBar;
-
-    int pictureN =0;
-
-    private Intent intentGallery;
-
-    Uri selectedImageUri; // Global Variable
-    String  selectedPath; // Global Variable
 
     public static Intent getIntent(final Context context) {
         return new Intent(context, VideoActivity.class);
@@ -153,63 +144,12 @@ public class VideoActivity extends MvpActivity implements VideoView, SeekBar.OnS
     }
 
 
-    //***************************************************************************************************************************************/
-
-
     View.OnClickListener clickListener1 = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Log.i(TAG, "onClick: ");
             mVideoPresenter.onPictureClick();
-
-            //cam.choiceCamera(0);
-/*
-            if (pictureN == 0){
-                setLocalPicture(R.drawable.v1);
-                pictureN++;
-            } else if (pictureN == 1) {
-                setLocalPicture(R.drawable.v2);
-                pictureN++;
-            } else {
-                setLocalPicture(R.drawable.v3);
-                pictureN = 0;
-            }
-*/
         }
     };
-
-    View.OnClickListener clickListener2 = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            intentGallery.setType("image/*");
-            intentGallery.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intentGallery,"Select file to upload "), 10);
-        }
-    };
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (resultCode == RESULT_OK) {
-            if(data.getData() != null){
-                selectedImageUri = data.getData();
-            }else{
-                Log.d("selectedPath1 : ","Came here its null !");
-                Toast.makeText(getApplicationContext(), "failed to get Image!", Toast.LENGTH_LONG).show();
-            }
-
-            if (requestCode == 10)
-
-            {
-
-                selectedPath = selectedImageUri.getPath();
-                videoImageView.setImageURI(selectedImageUri);
-                Log.d("selectedPath1 : " ,selectedPath);
-                Toast.makeText(getApplicationContext(), " get Image!" + selectedPath, Toast.LENGTH_LONG).show();
-
-            }
-
-        }
-
-    }
 
 }

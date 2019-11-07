@@ -8,6 +8,7 @@
 package ru.pandaprg.core_camera_impl.Camera;
 
 import android.content.Context;
+import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.util.Log;
 import android.view.TextureView;
@@ -18,16 +19,14 @@ public class SurfaceListener implements TextureView.SurfaceTextureListener {
     private MyCamera2 myCamera2;
     private Context ctx;
 
-    TextureView view;
-
-
     public SurfaceListener(Context ctx) {
         this.ctx = ctx;
     }
 
-    public void setTextureView(TextureView view){
-        this.view = view;
-    }
+    private TextureView textureView;
+    public void setTextureView(TextureView textureView){
+        this.textureView = textureView;
+    }   // Todo Remove from here ?
 
 
     @Override
@@ -35,12 +34,21 @@ public class SurfaceListener implements TextureView.SurfaceTextureListener {
 
 
         Log.i(TAG, "onSurfaceTextureAvailable:"+surface.toString()+" w="+width+"  h="+height);
-        myCamera2 = new MyCamera2(ctx, width, height, view, surface); // (1)-(6)    // Перегружен конструктор, Передаётся много лишних параметров
+        myCamera2 = new MyCamera2(ctx, width, height); // (1)-(6)
 
-        //(7) Setup the image buffer size to TextureView
+
+        // (4) Настраиваем матрицу трансформации. Для подгонки изображения кэкрану используем матрицу трансформации
+        Matrix matrix = myCamera2.configureTransform(width, height);
+        textureView.setTransform(matrix);
+
+        // (5) Запускаем фоновый поток
+        // (6) Подключаемся к камере с полученным ID
+        myCamera2.cameraOpen(); // (5) (6)
+
+        //(7) Настраиваем размер буффера TextureView
         surface.setDefaultBufferSize(width, height);
 
-        //(8) Start Camera
+        //(8) Запускаем Camera
         myCamera2.startCameraCaptureSession (surface);
     }
 

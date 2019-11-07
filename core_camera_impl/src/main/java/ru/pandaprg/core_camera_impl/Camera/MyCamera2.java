@@ -37,7 +37,6 @@ import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
-import android.view.TextureView;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -59,7 +58,7 @@ public class MyCamera2 {
     private int width;
     private int height;
     private Size mPreviewSize;
-    private TextureView textureView;
+    //private TextureView textureView;
 
     private String cameraID;
 
@@ -74,7 +73,7 @@ public class MyCamera2 {
     private CameraDevice cameraDevice;
 
     private Surface surface;
-    private SurfaceTexture surfaceTexture;
+    //private SurfaceTexture surfaceTexture;
 
     private ImageReader imageReader;
 
@@ -91,15 +90,11 @@ public class MyCamera2 {
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public MyCamera2(Context ctx, int width, int height, TextureView textureView, SurfaceTexture surfaceTexture) {
-
+    public MyCamera2(Context ctx, int width, int height ){
         this.ctx = ctx;
         this.width = width;
         this.height = height;
-        this.textureView = textureView;
 
-        this.surfaceTexture = surfaceTexture;
-        this.surface = new Surface(surfaceTexture);
 
         if (ActivityCompat.checkSelfPermission(ctx, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -120,17 +115,7 @@ public class MyCamera2 {
         Log.i(TAG, "MyCamera2: (2) set Camera ID = " + cameraID);
 
         // (3) Настраиваем область предпросмотра. Камеры и экраны могут иметь различное разрешение, необходимо выбрать оптимальное для ориентации и разрешения экрана
-        Log.i(TAG, "MyCamera2_: setUpCameraOutputs(ctx, " + width+" , "+height+" );");
         setUpCameraOutputs(ctx, width, height);
-
-
-        // (4) Настраиваем матрицу трансформации. Для подгонки изображения кэкрану используем матрицу трансформации
-        Log.i(TAG, "MyCamera2_: configureTransform( " + width +" , " + height + ");");
-        configureTransform(width, height);
-
-        // (5) Запускаем фоновый поток
-        // (6) Подключаемся к камере с полученным ID
-        cameraOpen(); // (5) (6)
 
         // Возвращаемся в SurfaceListener
 
@@ -145,11 +130,6 @@ public class MyCamera2 {
 
             for (String camera : cameraList) {
                 cameraCharacteristics = cameraManager.getCameraCharacteristics(camera);
-                StreamConfigurationMap map =cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-                if (map == null) {
-                    throw new IllegalStateException("Failed to get configuration map: " + camera);
-                }
-                mPreviewSize = getPrefferedPreviewsize(map.getOutputSizes(SurfaceTexture.class),width,height);
                 Integer cameraDirection = cameraCharacteristics.get(CameraCharacteristics.LENS_FACING);
                 if (cameraDirection != null &&
                         cameraDirection == CameraCharacteristics.LENS_FACING_BACK) {
@@ -165,16 +145,20 @@ public class MyCamera2 {
     // (3) Настраиваем область предпросмотра
     private void setUpCameraOutputs(Context ctx, int width, int height) {
         Log.i(TAG, "setUpCameraOutputs: width=" + width + " height=" + height);
+        StreamConfigurationMap map =cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+        if (map == null) {
+            throw new IllegalStateException("Failed to get configuration map: ");
+        }
+        mPreviewSize = getPrefferedPreviewsize(map.getOutputSizes(SurfaceTexture.class),width,height);
     }
 
-    // TODO переработать
-    // (4) Настраиваем матрицу трансформации. Для подгонки изображения кэкрану используем матрицу трансформации
-    private void configureTransform(int width, int height) {
+    // (4) Настраиваем матрицу трансформации. Для подгонки изображения к экрану используем матрицу трансформации
+    public Matrix configureTransform(int width, int height) {
         Log.i(TAG, "configureTransform: width=" + width + " height=" + height);
 
         if (mPreviewSize == null) {
             Log.i(TAG, "configureTransform: mPreviewSize == null");
-            return;
+            return null;
         }
 
         Matrix matrix = new Matrix();
@@ -195,9 +179,9 @@ public class MyCamera2 {
             matrix.postRotate(90* (rotation-2),centerX, centerY);
             Log.i(TAG, "configureTransform: Scale = "+scale);
             Log.i(TAG, "configureTransform: Rotate = " + 90* (rotation-2));
-            textureView.setTransform(matrix);
+            return matrix;
         }
-
+        return null;
     }
 
     private Size getPrefferedPreviewsize (Size [] mapSizes, int width, int height){ // (4.1) Выбираем оптимальное соотношение сторон
@@ -223,9 +207,9 @@ public class MyCamera2 {
         Log.i(TAG, "getPrefferedPreviewsize: mapSizes[0] Width()="+mapSizes[0].getWidth() + "  Height()="+mapSizes[0].getHeight());
         return mapSizes[0];
     }
-
+//---------------------------------------------------------------------------------------------------------------------------------------------
     // (5) Открываем камеру. Запускаем фоновый поток
-    private void cameraOpen() {
+    public void cameraOpen() {
         try {
 
             startBackgroundThread(); // (5)
@@ -274,12 +258,6 @@ public class MyCamera2 {
 
     //(8) Запускаем камеру
     public void startCameraCaptureSession(SurfaceTexture surface) {
-        /*
-        Log.i(TAG, "startCameraCaptureSession: Create Image reader");
-        imageReader = ImageReader.newInstance(width, height, ImageFormat.JPEG, 1); // Создаём но не используем?
-
-        Log.i(TAG, "startCameraCaptureSession: Create Image reader DONE");
-        */
 
     ArrayList<Surface> surfaceArrayList = new ArrayList<Surface>();
         this.surface = new Surface(surface);
@@ -321,10 +299,6 @@ public class MyCamera2 {
             e.printStackTrace();
         }
         builder.addTarget(surface);
-        //enableDefaultModes(builder);
-       // Log.i(TAG, "createPreviewRequestBuilder: Set orientation = " + 90);
-        builder.set(CaptureRequest.JPEG_ORIENTATION,  90);//getJpegOrientation() );
-        Log.i(TAG, "createPreviewRequestBuilder: Get orientation = " + builder.get(CaptureRequest.JPEG_ORIENTATION) );
         return builder;
     }
 

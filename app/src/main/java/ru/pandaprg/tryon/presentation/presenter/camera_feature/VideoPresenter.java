@@ -67,15 +67,3 @@ public class VideoPresenter extends MvpPresenter<VideoView> {
     }
 }
 
-/*
-* if (pictureN == 0){
-                Picasso.get().load(R.drawable.v1).into(imageView);
-                pictureN++;
-            } else if (pictureN == 1) {
-                Picasso.get().load(R.drawable.v2).into(imageView);
-                pictureN++;
-            } else {
-                Picasso.get().load(R.drawable.v3).into(imageView);
-                pictureN++;
-            }
-* */

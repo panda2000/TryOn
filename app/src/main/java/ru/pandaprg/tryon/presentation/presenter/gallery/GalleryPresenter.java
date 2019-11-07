@@ -20,16 +20,12 @@ public class GalleryPresenter extends MvpPresenter<GalleryView> {
 
     private ArrayList<GalleryItem> list;
     private ArrayList<String> dirs;
-//    private FileFilter fileFilter;
 
 
     public ArrayList<GalleryItem> generateList () {
         list = new ArrayList<GalleryItem>();
         dirs = new ArrayList<String>();
-    /*    list.add(new GalleryItem("V1", R.drawable.v1));
-        list.add(new GalleryItem("V2",R.drawable.v2));
-        list.add(new GalleryItem("V3",R.drawable.v3));
-    */
+
         return list;
     }
 
